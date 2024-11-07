@@ -1,0 +1,15 @@
+npm install --save @nestjs-modules/mailer
+
+npm i --save @nestjs-modules/mailer nodemailer
+
+npm i --save-dev @types/nodemailer
+
+npm install handlebars
+
+npm i --save @nestjs/config
+
+npm i --save class-validator class-transformer
+
+npm install --save @nestjs/jwt
+
+npm i --save passport passport-jwt @nestjs/jwt @nestjs/passport
