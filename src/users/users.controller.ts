@@ -4,10 +4,12 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
 } from '@nestjs/common';
 import { UserDto } from './dto/create-user.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -32,5 +34,17 @@ export class UsersController {
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return await this.usersService.delete(id);
+  }
+
+  // rota para alterar a senha que veio com o token:
+  @Patch('reset-password/:recoverToken')
+  async resetPassword(
+    @Param('recoverToken') recoverToken: string,
+    @Body() updatePasswordDto: UpdatePasswordDto,
+  ) {
+    return await this.usersService.updatePassword(
+      recoverToken,
+      updatePasswordDto,
+    );
   }
 }

@@ -13,3 +13,7 @@ npm i --save class-validator class-transformer
 npm install --save @nestjs/jwt
 
 npm i --save passport passport-jwt @nestjs/jwt @nestjs/passport
+
+npm install hbs
+
+npm install dotenv

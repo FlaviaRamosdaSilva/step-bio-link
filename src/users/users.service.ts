@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'Config/prisma.service';
 import { UserDto } from './dto/create-user.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class UsersService {
@@ -67,6 +68,33 @@ export class UsersService {
     return await this.prisma.user.delete({
       where: {
         id,
+      },
+    });
+  }
+
+  // SALVARA A NOVA SENNHA
+  async updatePassword(
+    recoverToken: string,
+    updatePasswordDto: UpdatePasswordDto,
+  ) {
+    // Encontre o usuário pelo recoverToken
+    const user = await this.prisma.user.findFirst({
+      where: { recoverToken },
+    });
+
+    if (!user) {
+      throw new NotFoundException('Token de recuperação inválido.');
+    }
+
+    // Hash da nova senha com BCRYPT
+    // const hashedPassword = await bcrypt.hash(updatePasswordDto.newPassword, 10);
+
+    // Atualize o usuário com a nova senha e remova o recoverToken
+    return this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: updatePasswordDto.newPassword,
+        recoverToken: null, // Limpa o token de recuperação após o uso
       },
     });
   }
